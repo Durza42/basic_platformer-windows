@@ -1,0 +1,8 @@
+../data/imgs/forest_filter.png
+4
+-25 -25 50 550 ../data/imgs/bloc.png
+525 300 100 50 ../data/imgs/bloc.png
+775 -25 50 550 ../data/imgs/bloc.png
+0 350 800 50 ../data/imgs/bloc.png
+1
+../data/imgs/forest_background.png

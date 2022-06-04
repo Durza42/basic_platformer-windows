@@ -1,0 +1,50 @@
+=== mettre en forme les tuiles d'un niveau ===
+
+ -- entrée --
+
+   5
+   5
+   ▪️▪️▪️▪️▪️
+   ▪️⬜️⬜️⬜️▪️
+   ▪️⬜️⬜️⬜️▪️
+   ▪️⬜️⬜️⬜️▪️
+   ▪️▪️▪️▪️▪️
+
+ -- algorithme --
+
+   Pour chaque bloc :
+      * Si tous les blocs sont pleins autour :
+         * bloc = ⬜️
+      * Sinon Si les blocs au dessus et à gauche sont vides :
+         * bloc = ↖️
+      ...
+      * Sinon Si le bloc juste au dessus est vide :
+         * bloc = ⬆️
+      * Sinon, Si le bloc juste à gauche est vide :
+         * bloc = ⬅️
+      ...
+
+ -- sortie voulue --
+
+   ▪️▪️▪️▪️▪️
+   ▪️↖️⬆️↗️▪️
+   ▪️⬅️⬜️➡️▪️
+   ▪️↙️⬇️↘️▪️
+   ▪️▪️▪️▪️▪️
+
+=== lire un fichier .lvl ===
+
+ -- passage 1 -- 
+
+   Pour chaque ligne :
+      * enlever tous les espaces en début de ligne
+      * Si la ligne NE commence PAS par un '\' :
+         * la copier dans un fichier temporaire : "compiled_1.Clvl"
+
+ -- passage 3 --
+
+   Lire les informations et les appliquer
+
+
+
+

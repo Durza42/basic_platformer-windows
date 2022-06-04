@@ -1,0 +1,6 @@
+../data/imgs/forest_filter.png     <- sur la première ligne est stocké le chemin de l'arrière plan du niveau.
+2                                  <- sur la deuxième ligne est stocké le nombre de blocs 'nb_blocs' du niveau.
+100 80 50 5 ../data/imgs/bloc.png  <- sur les 'nb_blocs' lignes suivantes, sont stockées dans l'ordre les coordonnées X et Y puis les dimentions W et H, et enfin le chemin de l'image, séparés par des espaces.
+42 71 90 15 ../data/imgs/bloc.png  <- Ce deuxième bloc sera donc de coordonnées 42, 71 et de taille 90x15. Il aura pour apparence l'image ../data/bloc.png
+1                                  <- sur la ligne suivante est stocké un nombre : 1 si il y a un foreground, 0 sinon.
+../data/imgs/forest_forest/png     <- sur la dernière ligne est stocké le chemin du foreground si la ligne d'avant contient un 1.
