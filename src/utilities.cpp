@@ -1,3 +1,24 @@
+/*
+ * utilities.cpp
+ * This file is part of 'basic platformer template'
+ *
+ * Copyright (C) 2022 - Durza42
+ *
+ * 'basic platformer template' is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * 'basic platformer template' is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with 'basic platformer template'. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+ 
 #include "utilities.h"
 
 /*******************************************
@@ -7,21 +28,11 @@
  * fenêtre à partir du chemin de l'image   *
  *******************************************/
 
-SDL_Texture* uts::load_img (const char* path_tmp, SDL_Renderer *renderer) {
-
-   size_t size = strlen(path_tmp);
-   char path[size];
-   for (size_t i = 0 ; i < size ; ++i)
-      path[i] = path_tmp[i];
-   path[size - 3] = 'b';
-   path[size - 2] = 'm';
-   path[size - 1] = 'p';
-   path[size] = '\0';
+SDL_Texture* uts::load_img (const char* path, SDL_Renderer *renderer) {
 
       // on charge l'image dans une SDL_Surface
    SDL_Surface* tmp { NULL };
-//   tmp = IMG_Load (path);
-   tmp = SDL_LoadBMP (path);
+   tmp = IMG_Load (path);
 
       // si il y a eu une erreur (par ex. que l'image n'existe pas)
    if (!tmp) {

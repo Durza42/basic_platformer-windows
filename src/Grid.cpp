@@ -1,3 +1,24 @@
+/*
+ * Grid.cpp
+ * This file is part of 'basic platformer template'
+ *
+ * Copyright (C) 2022 - Durza42
+ *
+ * 'basic platformer template' is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * 'basic platformer template' is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with 'basic platformer template'. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+ 
 #include "Grid.h"
 
 Grid::Grid () {
@@ -44,49 +65,100 @@ void Grid::automap (Tileset tileset) {
    for (size_t i {0} ; i < m_look_grid[i].size() ; ++i)
       for (size_t j {0} ; j < m_look_grid.size() ; ++j)
          if (m_col_grid[j][i] == 'X')
-            m_look_grid[j][i] = tileset.get_tile(FULL);
-
-/* Fonction à terme : 
- *
- *   5
- *   5
- *   ▪️▪️▪️▪️▪️
- *   ▪️⬜️⬜️⬜️▪️
- *   ▪️⬜️⬜️⬜️▪️
- *   ▪️⬜️⬜️⬜️▪️
- *   ▪️▪️▪️▪️▪️
- *
- *       ||
- *       \/
- *
- * -- algorithme --
- *
- *   Pour chaque bloc :
- *      * Si tous les blocs sont pleins autour :
- *         * bloc = ⬜️
- *      * Sinon Si les blocs au dessus et à gauche sont vides :
- *         * bloc = ↖️
- *      ...
- *      * Sinon Si le bloc juste au dessus est vide :
- *         * bloc = ⬆️
- *      * Sinon, Si le bloc juste à gauche est vide :
- *         * bloc = ⬅️
- *      ...
- *
- *       ||
- *       \/
- *
- * -- sortie voulue --
- *
- *   ▪️▪️▪️▪️▪️
- *   ▪️↖️⬆️↗️▪️
- *   ▪️⬅️⬜️➡️▪️
- *   ▪️↙️⬇️↘️▪️
- *   ▪️▪️▪️▪️▪️
- *
- */
+            m_look_grid[j][i] = tileset.get_tile(compute_tile_look(j, i));
 }
 
+
+/*********************************************************
+ * compute_tile_look :                                   *
+ * -------------------                                   *
+ * calcule quelle apparence doit avoir la tuile demandée *
+ * en fonction de celles qui l'entourent                 *
+ *********************************************************/
+
+Tiletype Grid::compute_tile_look(size_t x, size_t y) {
+
+      // la conversion en entier est nécessaire,
+      // car size_t est non signé ; la comparaison avec 0 renverrait alors toujours false.
+   if ((int)x - 1 < 0) {
+      if ((int)y - 1 < 0)
+         return CORNER_LEFT_UP;
+      else if ((int)y + 1 >= m_col_grid[0].size())
+         return CORNER_LEFT_DOWN;
+      else
+         return LEFT;
+   }
+   else if ((int)x + 1 >= m_col_grid.size()) {
+      if ((int)y - 1 < 0)
+         return CORNER_RIGHT_UP;
+      else if ((int)y + 1 >= m_col_grid[0].size())
+         return CORNER_RIGHT_DOWN;
+      else
+         return RIGHT;
+   }
+
+   if (m_col_grid[x - 1][y] == 'X'
+   and m_col_grid[x + 1][y] == 'X'
+   and m_col_grid[x][y - 1] == 'X'
+   and m_col_grid[x][y + 1] == 'X')
+      return FULL;
+
+
+   /* TODO: links */
+
+
+   if (m_col_grid[x - 1][y] != 'X'
+   and m_col_grid[x + 1][y] == 'X'
+   and m_col_grid[x][y - 1] != 'X'
+   and m_col_grid[x][y + 1] == 'X')
+      return CORNER_LEFT_UP;
+
+   if (m_col_grid[x - 1][y] == 'X'
+   and m_col_grid[x + 1][y] != 'X'
+   and m_col_grid[x][y - 1] != 'X'
+   and m_col_grid[x][y + 1] == 'X')
+      return CORNER_RIGHT_UP;
+
+   if (m_col_grid[x - 1][y] != 'X'
+   and m_col_grid[x + 1][y] == 'X'
+   and m_col_grid[x][y - 1] == 'X'
+   and m_col_grid[x][y + 1] != 'X')
+      return CORNER_LEFT_DOWN;
+
+   if (m_col_grid[x - 1][y] == 'X'
+   and m_col_grid[x + 1][y] != 'X'
+   and m_col_grid[x][y - 1] == 'X'
+   and m_col_grid[x][y + 1] != 'X')
+      return CORNER_RIGHT_DOWN;
+
+
+   if (m_col_grid[x - 1][y] != 'X'
+   and m_col_grid[x + 1][y] == 'X'
+   and m_col_grid[x][y - 1] == 'X'
+   and m_col_grid[x][y + 1] == 'X')
+      return LEFT;
+
+   if (m_col_grid[x - 1][y] == 'X'
+   and m_col_grid[x + 1][y] != 'X'
+   and m_col_grid[x][y - 1] == 'X'
+   and m_col_grid[x][y + 1] == 'X')
+      return RIGHT;
+
+   if (m_col_grid[x - 1][y] == 'X'
+   and m_col_grid[x + 1][y] == 'X'
+   and m_col_grid[x][y - 1] != 'X'
+   and m_col_grid[x][y + 1] == 'X')
+      return UP;
+
+   if (m_col_grid[x - 1][y] == 'X'
+   and m_col_grid[x + 1][y] == 'X'
+   and m_col_grid[x][y - 1] == 'X'
+   and m_col_grid[x][y + 1] != 'X')
+      return DOWN;
+
+   return FULL;
+
+}
 
 /****************************************
  * load :                               *

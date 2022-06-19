@@ -1,3 +1,24 @@
+/*
+ * Lvl.cpp
+ * This file is part of 'basic platformer template'
+ *
+ * Copyright (C) 2022 - Durza42
+ *
+ * 'basic platformer template' is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * 'basic platformer template' is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with 'basic platformer template'. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+ 
 #include "Lvl.h"
 
 
@@ -8,7 +29,8 @@
  * C'est cette fonction qui sera appelée à la création de l'objet *
  ******************************************************************/
 
-Lvl::Lvl (SDL_Renderer* renderer, const size_t & lvl_id) {
+Lvl::Lvl (SDL_Renderer* renderer, const size_t & lvl_id) :
+     m_spawn { DEFAULT_PERSO_POS_X, DEFAULT_PERSO_POS_Y } {
    load_lvl (lvl_id, renderer);
 }
 
@@ -136,6 +158,10 @@ void Lvl::load_grid (std::ifstream& file) {
          grid[j][i] = file.get();
          if (grid[j][i] == '\n')
             --j;
+         else if (grid[j][i] == 'S') {
+            m_spawn.x = j * 25;
+            m_spawn.y = i * 25;
+         }
       }
    }
 
@@ -245,4 +271,8 @@ void Lvl::print_grid (SDL_Renderer* renderer, int x_offset, int y_offset) {
 
 Grid Lvl::get_grid () const {
    return m_grid;
+}
+
+SDL_Point Lvl::get_spawn () const {
+   return m_spawn;
 }

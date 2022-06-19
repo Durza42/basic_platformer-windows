@@ -1,3 +1,24 @@
+/*
+ * Perso.h
+ * This file is part of 'basic platformer template'
+ *
+ * Copyright (C) 2022 - Durza42
+ *
+ * 'basic platformer template' is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * 'basic platformer template' is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with 'basic platformer template'. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+
 #ifndef PERSO_H
  #define PERSO_H
 
@@ -13,8 +34,8 @@
  #define DEFAULT_PERSO_POS_X 400
  #define DEFAULT_PERSO_POS_Y 300
 
- #define PERSO_HEIGHT   50
- #define PERSO_WIDTH    50
+ #define PERSO_HEIGHT   45
+ #define PERSO_WIDTH    45
 
  #define MOOVE_ADD   7.5
  #define JUMP_ADD    (-25)
@@ -26,6 +47,7 @@ class Perso {
 
    Perso ();
    Perso (const char* path, SDL_Renderer* renderer);
+   Perso (const char* path, SDL_Renderer* renderer, SDL_Point spawn);
    ~Perso ();
 
    void print (SDL_Renderer* renderer);

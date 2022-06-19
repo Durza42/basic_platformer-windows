@@ -1,5 +1,5 @@
 /*
- * main.cpp
+ * Menu.cpp
  * This file is part of 'basic platformer template'
  *
  * Copyright (C) 2022 - Durza42
@@ -19,31 +19,12 @@
  */
 
  
-#include "Game.h"
+#include "Menu.h"
 
-/* ##################################################################
-   # TODO: delete textures at destructors (!!! fuites mémoires !!!) #
-   ################################################################## */
+Menu::Menu () {
+   
+}
 
-
-#include "Vector.h"
-#include <iostream>
-
-/***************************************************
- * main :                                          *
- * ------                                          *
- * C'est ici que commence l'exécution du programme *
- ***************************************************/
-
-   // sous windows, la fonction main doit s'appeller WinMain.
-#ifdef __WIN32__
-int WinMain () {
-#else
-int main () {
-#endif
-
-   Game game;
-   game.main_loop ();
-
-   return EXIT_SUCCESS;
+Menu::~Menu () {
+   
 }

@@ -1,3 +1,24 @@
+/*
+ * Perso.cpp
+ * This file is part of 'basic platformer template'
+ *
+ * Copyright (C) 2022 - Durza42
+ *
+ * 'basic platformer template' is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * 'basic platformer template' is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with 'basic platformer template'. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+ 
 #include "Perso.h"
 
 
@@ -30,6 +51,24 @@ Perso::Perso () :
 Perso::Perso (const char* path, SDL_Renderer* renderer) :
        m_look { uts::load_img (path, renderer) },
        m_pos { DEFAULT_PERSO_POS_X, DEFAULT_PERSO_POS_Y, PERSO_WIDTH, PERSO_HEIGHT },
+       m_dir { 1, 0 },
+       m_moove { 0, 0 },
+       m_can_jump { true } {
+
+}
+
+
+/****************************************************************************
+ * perso :                                                                  *
+ * -------                                                                  *
+ * constructeur de la classe Perso                                          *
+ * C'est cette fonction qui sera appelée à la création de l'objet,          *
+ * si le chemin de son image ainsi que le spawn sont spécifiées en argument *
+ ****************************************************************************/
+
+Perso::Perso (const char* path, SDL_Renderer* renderer, const SDL_Point spawn) :
+       m_look { uts::load_img (path, renderer) },
+       m_pos { spawn.x, spawn.y, PERSO_WIDTH, PERSO_HEIGHT },
        m_dir { 1, 0 },
        m_moove { 0, 0 },
        m_can_jump { true } {
@@ -148,13 +187,13 @@ void Perso::moove_x (const Grid & grid) {
 void Perso::moove_y (const Grid & grid) {
 
    if (m_moove.get_y() > 0) {
-      SDL_Rect col_zone { m_pos.x, m_pos.y, m_pos.w, m_pos.h + int(round(m_moove.get_y())) };
+      SDL_Rect col_zone { m_pos.x, m_pos.y, m_pos.w, m_pos.h + int(round(m_moove.get_y() - 1)) };
       if (!grid.has_col(col_zone))
          m_pos.y += int(round(m_moove.get_y()));
       else {
          m_moove.set_y(0);
-         if (m_pos.y % BLOC_GRID_SIZE > 1)
-            m_pos.y += BLOC_GRID_SIZE - (m_pos.y % BLOC_GRID_SIZE) - 1;
+         if ((m_pos.y + m_pos.h) % BLOC_GRID_SIZE > 1)
+            m_pos.y += BLOC_GRID_SIZE - ((m_pos.y + m_pos.h) % BLOC_GRID_SIZE) - 1;
          m_can_jump = true;
       }
    }
@@ -194,16 +233,20 @@ void Perso::loose_speed () {
 void Perso::fall (const Grid & grid) {
 
    if (m_moove.get_y() == 0) {
+      SDL_Rect col_zone { m_pos.x, m_pos.y, m_pos.w, m_pos.h + 1 };
+/*
       if (grid.is_wall(m_pos.x / BLOC_GRID_SIZE, (m_pos.y + m_pos.h) / BLOC_GRID_SIZE + 1)
        || grid.is_wall((m_pos.x + m_pos.w) / BLOC_GRID_SIZE, (m_pos.y + m_pos.h) / BLOC_GRID_SIZE + 1)) {
+*/
+      if (grid.has_col(col_zone)) {
          m_can_jump = true;
-         if (m_pos.y % BLOC_GRID_SIZE > 1)
-            m_pos.y += BLOC_GRID_SIZE - (m_pos.y % BLOC_GRID_SIZE) - 1;
+         if ((m_pos.y + m_pos.h) % BLOC_GRID_SIZE > 1)
+            m_pos.y += BLOC_GRID_SIZE - ((m_pos.y + m_pos.h) % BLOC_GRID_SIZE) - 1;
          return;
       }
       else {
          m_can_jump = false;
-         SDL_Rect hitbox { m_pos.x, m_pos.y, m_pos.w, m_pos.h + GRAVITY_ADD }; // -1 pour compenser celui mis à l'initialisation
+         SDL_Rect hitbox { m_pos.x, m_pos.y, m_pos.w, m_pos.h + GRAVITY_ADD };
          if (!grid.has_col(hitbox)) {
             m_moove += (Vector){ 0, GRAVITY_ADD };
             return;

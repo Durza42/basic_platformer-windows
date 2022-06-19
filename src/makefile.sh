@@ -1,5 +1,5 @@
     # You can run this file to compile and run the game, if you are on Linux 64 and you have already installed g++ and the SDL2 library.
-    # Later, a newer version will pre-compile this game; so you'll not need tp install all libraries.
+    # Later, a newer version will pre-compile this game; so you'll not need to install all libraries.
     # But right now, it's sadly necessary. We're sorry for this...
 
 echo \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#
@@ -26,6 +26,7 @@ g++ -std=c++17 -Wall -Wextra -c Vector.cpp -o Vector.o
 g++ -std=c++17 -Wall -Wextra -c Input.cpp -o Input.o 
 g++ -std=c++17 -Wall -Wextra -c Grid.cpp -o Grid.o 
 g++ -std=c++17 -Wall -Wextra -c Tileset.cpp -o Tileset.o 
+g++ -std=c++17 -Wall -Wextra -c Menu.cpp -o Menu.o 
 
 echo \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#
 echo all files compiled.
@@ -34,9 +35,9 @@ echo \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#
 
 echo
 
-g++ -std=c++17 -Wall -Wextra main.o Context.o Game.o Perso.o utilities.o Background.o Foreground.o Lvl.o Vector.o Input.o Grid.o Tileset.o -o ../exec/dream.elf `sdl2-config --libs` -lSDL2_image -lSDL2_mixer
+g++ -std=c++17 -Wall -Wextra main.o Context.o Game.o Perso.o utilities.o Background.o Foreground.o Lvl.o Vector.o Input.o Grid.o Tileset.o Menu.o -o ../exec/dream.elf `sdl2-config --libs` -lSDL2_image -lSDL2_mixer
 
-rm Background.o Context.o Foreground.o Game.o Grid.o Input.o Lvl.o main.o Perso.o Tileset.o utilities.o Vector.o
+rm Background.o Context.o Foreground.o Game.o Grid.o Input.o Lvl.o main.o Perso.o Tileset.o utilities.o Vector.o Menu.o
 
 echo \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#
 echo all files linked.
