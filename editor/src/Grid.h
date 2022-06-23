@@ -44,6 +44,11 @@ class Grid {
    bool is_clicked_middle (SDL_Point mouse);
    void is_not_clicked_middle ();
 
+   void add_w (Tileset tileset);
+   void remove_w ();
+   void add_h (Tileset tileset);
+   void remove_h ();
+
   private:
 
       // une grille (2D) de caractères : 'X' pour un mur, '.' pour du vide, etc. Voir "../data/lvls_config/aide.lvl" pour la liste complète.
@@ -62,6 +67,8 @@ class Grid {
 
       // emplacement de la souris avant le mouvement de la grille
    SDL_Point m_mouse_before_moove;
+
+   unsigned long int m_last_size_change;
 };
 
 #endif

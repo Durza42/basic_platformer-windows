@@ -19,7 +19,7 @@ class Left_menu {
 
    void print(SDL_Renderer* renderer);
 
-   void click(SDL_Point mouse, std::vector<std::vector<char>> grid);
+   void click(SDL_Point mouse, Grid& grid, Tileset tileset);
 
    void save_map(std::vector<std::vector<char>> grid);
 

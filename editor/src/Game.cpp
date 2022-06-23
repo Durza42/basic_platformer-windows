@@ -42,7 +42,7 @@ void Game::main_loop ()
 
    while (manage_input())
    {
-      
+      SDL_Delay(REFRESH_RATE);
    }
 }
 
@@ -57,10 +57,34 @@ bool Game::manage_input ()
    if (m_input.get_key(SDL_SCANCODE_ESCAPE))
       return false;
 
+   if (m_input.get_key(SDL_SCANCODE_UP))
+   {
+      m_grid.set_offset(m_grid.get_x_offset(), m_grid.get_y_offset() + BLOC_GRID_SIZE);
+      refresh(); // on ne rafraichit que si quelque-chose a changé
+   }
+
+   if (m_input.get_key(SDL_SCANCODE_DOWN))
+   {
+      m_grid.set_offset(m_grid.get_x_offset(), m_grid.get_y_offset() - BLOC_GRID_SIZE);
+      refresh(); // on ne rafraichit que si quelque-chose a changé
+   }
+
+   if (m_input.get_key(SDL_SCANCODE_LEFT))
+   {
+      m_grid.set_offset(m_grid.get_x_offset() + BLOC_GRID_SIZE, m_grid.get_y_offset());
+      refresh(); // on ne rafraichit que si quelque-chose a changé
+   }
+
+   if (m_input.get_key(SDL_SCANCODE_RIGHT))
+   {
+      m_grid.set_offset(m_grid.get_x_offset() - BLOC_GRID_SIZE, m_grid.get_y_offset());
+      refresh(); // on ne rafraichit que si quelque-chose a changé
+   }
+
    if (m_input.mouse_is_clicked())
    {
       m_top_menu.click(m_input.get_mouse_pos());
-      m_left_menu.click(m_input.get_mouse_pos(), m_grid.get_grid());
+      m_left_menu.click(m_input.get_mouse_pos(), m_grid, m_tileset);
       m_grid.is_clicked(m_input.get_mouse_pos(), m_tileset);
    }
 

@@ -4,7 +4,8 @@ Grid::Grid () :
       m_part_of_screen { 100, 50, DEFAULT_WINDOW_WIDTH - 100, DEFAULT_WINDOW_HEIGHT - 50 },
       m_x_offset { 100 },
       m_y_offset { 50 },
-      m_mouse_before_moove { -1, -1}
+      m_mouse_before_moove { -1, -1},
+      m_last_size_change { 0 }
 {
 
 }
@@ -173,6 +174,11 @@ bool Grid::is_clicked (SDL_Point mouse, Tileset tileset)
       int pos_x = floor((mouse.x - m_x_offset) / ((double)BLOC_GRID_SIZE + 1));
       int pos_y = floor((mouse.y - m_y_offset) / ((double)BLOC_GRID_SIZE + 1));
 
+      if (pos_x >= m_col_grid.size())
+         pos_x = m_col_grid.size() - 1;
+      if (pos_y >= m_col_grid[0].size())
+         pos_y = m_col_grid[0].size() - 1;
+
       if (pos_x < 0)
          pos_x = 0;
       if (pos_y < 0)
@@ -200,6 +206,11 @@ bool Grid::is_clicked_right (SDL_Point mouse, Tileset tileset)
    {
       int pos_x = floor((mouse.x - m_x_offset) / ((double)BLOC_GRID_SIZE + 1));
       int pos_y = floor((mouse.y - m_y_offset) / ((double)BLOC_GRID_SIZE + 1));
+
+      if (pos_x >= m_col_grid.size())
+         pos_x = m_col_grid.size() - 1;
+      if (pos_y >= m_col_grid[0].size())
+         pos_y = m_col_grid[0].size() - 1;
 
       if (pos_x < 0)
          pos_x = 0;
@@ -264,4 +275,76 @@ void Grid::is_not_clicked_middle ()
 std::vector<std::vector<char>> Grid::get_grid() const
 {
    return m_col_grid;
+}
+
+int Grid::get_x_offset () const
+{
+   return m_x_offset;
+}
+
+int Grid::get_y_offset () const
+{
+   return m_y_offset;
+}
+
+void Grid::set_offset (int x, int y)
+{
+   m_x_offset = x;
+   m_y_offset = y;
+}
+
+void Grid::add_w (Tileset tileset)
+{
+   if (SDL_GetTicks() - m_last_size_change < 250)
+      return;
+
+   m_last_size_change = SDL_GetTicks();
+
+   m_col_grid.push_back( { '.' } );
+   m_look_grid.push_back( { tileset.get_tile(AIR) } );
+}
+
+void Grid::remove_w ()
+{
+   if (SDL_GetTicks() - m_last_size_change < 250)
+      return;
+
+   m_last_size_change = SDL_GetTicks();
+
+   if (m_col_grid.size() <= 0)
+      return;
+
+   m_col_grid.pop_back();
+   m_look_grid.pop_back();
+}
+
+void Grid::add_h (Tileset tileset)
+{
+   if (SDL_GetTicks() - m_last_size_change < 250)
+      return;
+
+   m_last_size_change = SDL_GetTicks();
+
+   for (size_t i = 0 ; i < m_col_grid.size() ; ++i)
+   {
+      m_col_grid[i].push_back('.');
+      m_look_grid[i].push_back(tileset.get_tile(AIR));
+   }
+}
+
+void Grid::remove_h ()
+{
+   if (SDL_GetTicks() - m_last_size_change < 250)
+      return;
+
+   m_last_size_change = SDL_GetTicks();
+
+   for (size_t i = 0 ; i < m_col_grid.size() ; ++i)
+   {
+      if (m_col_grid[i].size() > 0)
+      {
+         m_col_grid[i].pop_back();
+         m_look_grid[i].pop_back();
+      }
+   }
 }

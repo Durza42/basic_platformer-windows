@@ -3,7 +3,11 @@
 Left_menu::Left_menu (SDL_Renderer* renderer) :
            m_look(uts::load_img(DEFAULT_LEFT_MENU_PATH, renderer)),
            m_pos { 0, 0, 100, 800 },
-           m_fields { { 0, 0, 100, 45 } }
+           m_fields { { 0, 50,  100, 45 },
+                      { 0, 100, 100, 45 },
+                      { 0, 150, 100, 45 },
+                      { 0, 200, 100, 45 },
+                      { 0, 250, 100, 45 } }
 {
 
 }
@@ -17,10 +21,22 @@ void Left_menu::print(SDL_Renderer* renderer)
    SDL_RenderCopy(renderer, m_look, NULL, &m_pos);
 }
 
-void Left_menu::click(SDL_Point mouse, std::vector<std::vector<char>> grid)
+void Left_menu::click(SDL_Point mouse, Grid& grid, Tileset tileset)
 {
    if (SDL_PointInRect(&mouse, &m_fields[0]))
-      save_map(grid);
+      save_map(grid.get_grid());
+
+   if (SDL_PointInRect(&mouse, &m_fields[1]))
+      grid.add_w(tileset);
+
+   if (SDL_PointInRect(&mouse, &m_fields[2]))
+      grid.remove_w();
+
+   if (SDL_PointInRect(&mouse, &m_fields[3]))
+      grid.add_h(tileset);
+
+   if (SDL_PointInRect(&mouse, &m_fields[4]))
+      grid.remove_h();
 }
 
 void Left_menu::save_map(std::vector<std::vector<char>> grid)
