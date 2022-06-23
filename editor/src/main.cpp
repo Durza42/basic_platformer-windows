@@ -23,7 +23,7 @@
 #include "Game.h"
 
 // la SDL de Windows a besoin de argc & argv.
-#if defined (_WIN32) || defined(WIN32)
+#if defined (_WIN32) || defined(WIN32) || defined(__WIN32__)
 int main (int argc, char** argv) {
 #else
 int main () {

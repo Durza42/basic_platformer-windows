@@ -5,10 +5,11 @@
 
  #include <SDL2/SDL.h>
  #include <vector>
+ #include <cmath>
+
  #include "Tileset.h"
 // #include "Tilemenu.h"
  #include "Context.h"
- #include "Left_menu.h"
 
  #define BLOC_GRID_SIZE 25
 

@@ -22,7 +22,7 @@
 #include "Game.h"
 
 Game::Game () :
-      m_top_menu { m_context.get_renderer() }
+      m_top_menu { m_context.get_renderer() },
       m_left_menu { m_context.get_renderer() }
 {
    Loader::load(1, m_context.get_renderer(), m_grid, m_tileset);
@@ -60,7 +60,7 @@ bool Game::manage_input ()
    if (m_input.mouse_is_clicked())
    {
       m_top_menu.click(m_input.get_mouse_pos());
-      m_left_menu.click(m_input.get_mouse_pos());
+      m_left_menu.click(m_input.get_mouse_pos(), m_grid.get_grid());
       m_grid.is_clicked(m_input.get_mouse_pos(), m_tileset);
    }
 

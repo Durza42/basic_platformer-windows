@@ -29,6 +29,7 @@
  #include "Top_menu.h"
  #include "Grid.h"
  #include "Loader.h"
+ #include "Left_menu.h"
 
 class Game
 {

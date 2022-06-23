@@ -254,6 +254,13 @@ void Grid::is_not_clicked_middle ()
    m_mouse_before_moove.y = -1;
 }
 
+
+/***********************************
+ * get_grid :                      *
+ * ----------                      *
+ * renvoie la grille des colisions *
+ ***********************************/
+
 std::vector<std::vector<char>> Grid::get_grid() const
 {
    return m_col_grid;
