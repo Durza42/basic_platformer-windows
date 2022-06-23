@@ -30,7 +30,11 @@
 
 Input::Input () : 
        m_keys { false },
-       m_request_close { false }
+       m_request_close { false },
+       m_mouse_pos { 0, 0 },
+       m_mouse_is_clicked { false },
+       m_mouse_is_clicked_right { false },
+       m_mouse_is_clicked_middle { false }
 {
    
 }
@@ -79,10 +83,32 @@ bool Input::update ()
                m_mouse_pos.y = m_event.motion.y;
            break;
             case SDL_MOUSEBUTTONDOWN:
-               m_mouse_is_clicked = true;
+               switch (m_event.button.button)
+               {
+                  case SDL_BUTTON_LEFT:
+                     m_mouse_is_clicked = true;
+                 break;
+                  case SDL_BUTTON_RIGHT:
+                     m_mouse_is_clicked_right = true;
+                 break;
+                  case SDL_BUTTON_MIDDLE:
+                     m_mouse_is_clicked_middle = true;
+                 break;
+               }
            break;
             case SDL_MOUSEBUTTONUP:
-               m_mouse_is_clicked = false;
+               switch (m_event.button.button)
+               {
+                  case SDL_BUTTON_LEFT:
+                     m_mouse_is_clicked = false;
+                 break;
+                  case SDL_BUTTON_RIGHT:
+                     m_mouse_is_clicked_right = false;
+                 break;
+                  case SDL_BUTTON_MIDDLE:
+                     m_mouse_is_clicked_middle = false;
+                 break;
+               }
            break;
          }
       } while (SDL_PollEvent (&m_event));
@@ -150,4 +176,28 @@ SDL_Point Input::get_mouse_pos () const
 bool Input::mouse_is_clicked () const
 {
    return m_mouse_is_clicked;
+}
+
+
+/************************************************************
+ * mouse_is_clicked_right :                                 *
+ * ------------------                                       *
+ * retourne true si la souris fait clique droit, faux sinon *
+ ************************************************************/
+
+bool Input::mouse_is_clicked_right () const
+{
+   return m_mouse_is_clicked_right;
+}
+
+
+/*************************************************************
+ * mouse_is_clicked_middle :                                 *
+ * ------------------                                        *
+ * retourne true si la souris fait clique milieu, faux sinon *
+ *************************************************************/
+
+bool Input::mouse_is_clicked_middle () const
+{
+   return m_mouse_is_clicked_middle;
 }

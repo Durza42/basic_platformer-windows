@@ -22,7 +22,12 @@
 #include <SDL2/SDL.h>
 #include "Game.h"
 
+// la SDL de Windows a besoin de argc & argv.
+#if defined (_WIN32) || defined(WIN32)
 int main (int argc, char** argv) {
+#else
+int main () {
+#endif
 
    Game game;
    game.main_loop();

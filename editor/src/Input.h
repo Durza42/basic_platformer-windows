@@ -47,6 +47,9 @@ class Input
    bool get_key (size_t const & key) const;
 
    bool mouse_is_clicked () const;
+   bool mouse_is_clicked_right () const;
+   bool mouse_is_clicked_middle () const;
+
    SDL_Point get_mouse_pos () const;
 
   private:
@@ -65,6 +68,12 @@ class Input
 
       // true si la souris fait clique gauche
    bool m_mouse_is_clicked;
+
+      // true si la souris fait clique droit
+   bool m_mouse_is_clicked_right;
+
+      // true si la souris fait un clique milieu
+   bool m_mouse_is_clicked_middle;
 };
 
 #endif

@@ -23,6 +23,8 @@ g++ -std=c++17 -Wall -Wextra -c Top_menu.cpp -o Top_menu.o
 g++ -std=c++17 -Wall -Wextra -c Grid.cpp -o Grid.o
 g++ -std=c++17 -Wall -Wextra -c Tileset.cpp -o Tileset.o
 g++ -std=c++17 -Wall -Wextra -c Loader.cpp -o Loader.o
+g++ -std=c++17 -Wall -Wextra -c Tilemenu.cpp -o Tilemenu.o
+g++ -std=c++17 -Wall -Wextra -c Left_menu.cpp -o Left_menu.o
 
 echo \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#
 echo all files compiled.
@@ -31,9 +33,9 @@ echo \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#
 
 echo
 
-g++ -std=c++17 -Wall -Wextra main.o Context.o Game.o Input.o utilities.o Top_menu.o Grid.o Tileset.o Loader.o -o ../exec/editor.elf `sdl2-config --libs` -lSDL2_image -lSDL2_mixer
+g++ -std=c++17 -Wall -Wextra main.o Context.o Game.o Input.o utilities.o Top_menu.o Grid.o Tileset.o Loader.o Tilemenu.o Left_menu.o -o ../exec/editor.elf `sdl2-config --libs` -lSDL2_image -lSDL2_mixer
 
-rm Context.o Game.o Input.o main.o utilities.o Top_menu.o Grid.o Tileset.o Loader.o
+rm Context.o Game.o Input.o main.o utilities.o Top_menu.o Grid.o Tileset.o Loader.o Tilemenu.o Left_menu.o
 
 echo \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#
 echo all files linked.

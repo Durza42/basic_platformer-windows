@@ -7,7 +7,7 @@
  * charge le niveau spécifié *
  *****************************/
 
-bool Loader::load (const size_t & lvl_id, SDL_Renderer* renderer, Grid grid, Tileset tileset) {
+bool Loader::load (const size_t & lvl_id, SDL_Renderer* renderer, Grid& grid, Tileset& tileset) {
 
    /* =================================================== *
     * Pour comprendre la manière donc sont stockées       *
@@ -22,6 +22,7 @@ bool Loader::load (const size_t & lvl_id, SDL_Renderer* renderer, Grid grid, Til
    std::ifstream& file = f;
 
    load_tileset (file, renderer, tileset);
+   tileset.get_tile(FULL);
    load_grid (file, grid, tileset);
 
    return true;
@@ -34,7 +35,7 @@ bool Loader::load (const size_t & lvl_id, SDL_Renderer* renderer, Grid grid, Til
  * charge le jeu de tuiles du niveau *
  *************************************/
 
-void Loader::load_tileset (std::ifstream& file, SDL_Renderer* renderer, Tileset tileset) {
+void Loader::load_tileset (std::ifstream& file, SDL_Renderer* renderer, Tileset& tileset) {
 
       // on voit si il y a un tileset spécifique au niveau
    int has_tileset { 0 };
@@ -44,10 +45,8 @@ void Loader::load_tileset (std::ifstream& file, SDL_Renderer* renderer, Tileset 
       std::string path;
       file >> path;
 
-      // temporaire
-   tileset.load (DEV_TILESET_PATH, renderer);
-
-// TODO      m_tileset.load (path);
+         // temporaire
+      tileset.load (renderer);
    }
 // else { tileset par défaut ? } TODO
 }
@@ -59,7 +58,7 @@ void Loader::load_tileset (std::ifstream& file, SDL_Renderer* renderer, Tileset 
  * charge la map elle-même *
  ***************************/
 
-void Loader::load_grid (std::ifstream& file, Grid grid, Tileset tileset) {
+void Loader::load_grid (std::ifstream& file, Grid& grid, Tileset& tileset) {
 
       // taille de la grille
    size_t sizeX = 0, sizeY = 0;

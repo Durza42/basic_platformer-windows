@@ -53,6 +53,8 @@ class Game
       // menu du haut
    Top_menu m_top_menu;
 
+      // menu de gauche
+   Left_menu m_left_menu;
 
       // apparences des blocs utilisés dans le monde
    Tileset m_tileset;

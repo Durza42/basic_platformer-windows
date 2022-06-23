@@ -39,19 +39,20 @@
  ****************************************************/
 
 enum Tiletype {
-   FULL = 0,
-   LEFT = 1,
-   DOWN = 2,
-   RIGHT = 3,
-   UP = 4,
-   CORNER_LEFT_UP = 5,
-   CORNER_LEFT_DOWN = 6,
-   CORNER_RIGHT_UP = 7,
-   CORNER_RIGHT_DOWN = 8,
-   LINK_LEFT_UP = 9,
-   LINK_LEFT_DOWN = 10,
-   LINK_RIGHT_UP = 11,
-   LINK_RIGHT_DOWN = 12
+   AIR = 0,
+   FULL = 1,
+   LEFT = 2,
+   DOWN = 3,
+   RIGHT = 4,
+   UP = 5,
+   CORNER_LEFT_UP = 6,
+   CORNER_LEFT_DOWN = 7,
+   CORNER_RIGHT_UP = 8,
+   CORNER_RIGHT_DOWN = 9,
+   LINK_LEFT_UP = 10,
+   LINK_LEFT_DOWN = 11,
+   LINK_RIGHT_UP = 12,
+   LINK_RIGHT_DOWN = 13
 };
 
 
@@ -69,7 +70,7 @@ class Tileset {
    Tileset ();
    ~Tileset ();
 
-   void load (std::string path, SDL_Renderer* renderer); // <- TODO
+   void load (SDL_Renderer* renderer); // <- TODO
    SDL_Texture* get_tile (Tiletype type);
 
   private:

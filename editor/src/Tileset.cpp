@@ -36,15 +36,15 @@ Tileset::~Tileset () {
  * charge le tileset à partir du chemin de son image *
  *****************************************************/
 
-void Tileset::load (std::string path, SDL_Renderer* renderer) {
+void Tileset::load (SDL_Renderer* renderer) {
 
 //   m_tiles_global_look = uts::load_img (path.c_str(), renderer);
-
 
       // [TODO] Un seul fichier rassemblant toutes les images (fourni via l'arg path).
       // --> le découper en plusieurs textures, mais garder un seul fichier de départ
    std::vector<std::string> files_names
    {
+      "../data/imgs/tiles/air.png",
       "../data/imgs/tiles/dev.png",
       "../data/imgs/tiles/left.png",
       "../data/imgs/tiles/bottom.png",
@@ -62,14 +62,10 @@ void Tileset::load (std::string path, SDL_Renderer* renderer) {
 
 
    m_tiles_look.clear();
-   for (size_t i = 0 ; i < 13 ; ++i)
+
+   SDL_RenderClear(renderer);
+   for (size_t i = 0 ; i < files_names.size() ; ++i)
       m_tiles_look.push_back(uts::load_img(files_names[i].c_str(), renderer));
-
-   m_tiles_look[0];
-   std::cout << "safe ?" << std::endl;
-
-   // [TODO] découper la texture en rectangles ?
-//   m_tiles_look [i] = SDL_SetTextInputRect (m_tiles_global_look, &full_rect);
 }
 
 

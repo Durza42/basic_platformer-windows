@@ -23,12 +23,11 @@
 
 Game::Game () :
       m_top_menu { m_context.get_renderer() }
+      m_left_menu { m_context.get_renderer() }
 {
    Loader::load(1, m_context.get_renderer(), m_grid, m_tileset);
 
-   std::cout << "safe." << std::endl;
-
-   SDL_SetRenderDrawColor(m_context.get_renderer(), 25, 25, 25, 255);
+   SDL_SetRenderDrawColor(m_context.get_renderer(), CLEAR_COLOR_R, CLEAR_COLOR_G, CLEAR_COLOR_B, 255);
 }
 
 Game::~Game ()
@@ -59,7 +58,19 @@ bool Game::manage_input ()
       return false;
 
    if (m_input.mouse_is_clicked())
+   {
       m_top_menu.click(m_input.get_mouse_pos());
+      m_left_menu.click(m_input.get_mouse_pos());
+      m_grid.is_clicked(m_input.get_mouse_pos(), m_tileset);
+   }
+
+   if (m_input.mouse_is_clicked_right())
+      m_grid.is_clicked_right(m_input.get_mouse_pos(), m_tileset);
+
+   if (m_input.mouse_is_clicked_middle())
+      m_grid.is_clicked_middle(m_input.get_mouse_pos());
+   else
+      m_grid.is_not_clicked_middle();
 
    return true;
 }
@@ -68,8 +79,16 @@ void Game::refresh ()
 {
    SDL_RenderClear(m_context.get_renderer());
 
+   m_grid.print(m_context.get_renderer());
+
+   SDL_Rect left_side { 0, 0, 100, DEFAULT_WINDOW_HEIGHT };
+   SDL_Rect top_side { 0, 0, DEFAULT_WINDOW_WIDTH, 50 };
+
+   SDL_RenderFillRect(m_context.get_renderer(), &left_side);
+   SDL_RenderFillRect(m_context.get_renderer(), &top_side);
+
    m_top_menu.print(m_context.get_renderer());
-   m_grid.print(m_context.get_renderer(), 100, 50);
+   m_left_menu.print(m_context.get_renderer());
 
    SDL_RenderPresent(m_context.get_renderer());
 }

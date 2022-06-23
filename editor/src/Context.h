@@ -29,6 +29,10 @@
  #define DEFAULT_WINDOW_HEIGHT 800
  #define DEFAULT_WINDOW_WIDTH  1200
 
+ #define CLEAR_COLOR_R 25
+ #define CLEAR_COLOR_G 25
+ #define CLEAR_COLOR_B 25
+
 /*****************************************************
  * classe Context :                                  *
  * ----------------                                  *
